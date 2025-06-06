@@ -1,2 +1,2 @@
 # Fat-content-analysis
-DSC80 project: analyzing total fat content in relation to recipe ratings
+DSC80 project: Analyzing Total Fat Content In Relation To Recipe Ratings
