@@ -106,6 +106,8 @@ This line plot reveals a few important patterns:
 
 This aggregation helped shape our hypothesis: *Does fat content actually affect how a recipe is rated?* The variability in min ratings suggested a possible direction for deeper statistical testing.
 
+---
+
 ## Assessment of Missingness
 
 ### NMAR Analysis
@@ -146,9 +148,9 @@ We tested whether the missingness in the `rating` column depends on other observ
 
 **Conclusion**: The result is not statistically significant, so we fail to reject the null. This fails tosupports that **rating missingness is due to cooking time** (`minutes`), meaning people don’t forget to rate just because the recipe took longer.
 
----
-
 These results provide important context for modeling, especially since it's not missing completely at random.
+
+---
 
 ## Hypothesis Testing
 
@@ -174,6 +176,9 @@ We used the **difference in mean total fat content** (low - high) as our test st
 ### Conclusion  
 Since the p-value is below 0.05, we **reject the null hypothesis**. This provides **statistical evidence** that low-rated recipes tend to have slightly higher fat content than high-rated ones. While the relationship is subtle, the result suggests the idea that excessive fat might negatively impact user satisfaction.
 
+---
+
+
 ## Framing a Prediction Problem
 
 We aim to predict a recipe’s user rating based on its features, including ingredients, nutrition info, and reviews. This is a **multiclass classification** problem, where the response variable is the `rating` (1–5). We chose this because rating reflects user satisfaction and ties directly to our project’s central question. It also allows us to explore how recipe characteristics influence user preferences.
@@ -181,6 +186,8 @@ We aim to predict a recipe’s user rating based on its features, including ingr
 To evaluate our model, we use the **macro-averaged F1 score** instead of accuracy. This is because our class distribution is imbalanced — most ratings are 4s and 5s. F1 macro equally weighs each class and gives better insight into underrepresented ratings. It’s a more fair and informative metric for this use case.
 
 At prediction time, we only include features known when a recipe is submitted. This includes ingredients, nutritional data, time to prepare, and user review text. We exclude future-leaking info like average rating to preserve  relevance. This ensures our model makes fair predictions without cheating with future data.
+
+---
 
 ## Baseline Model
 
@@ -194,6 +201,8 @@ We evaluated the model using the **macro-averaged F1 score** to account for clas
   <img src="assets/baseline_confusion_matrix.png" width="400" alt="Baseline Confusion Matrix">
   <figcaption align="center">Confusion matrix of the baseline model predictions</figcaption>
 </figure>
+
+---
 
 ## Final Model
 
@@ -210,7 +219,9 @@ The best performing model achieved a **macro F1 score of 0.7446**, outperforming
   <figcaption align="center">Confusion matrix of the final model predictions</figcaption>
 </figure>
 
-### Step 8: Evaluating Model Fairness
+---
+
+## Evaluating Model Fairness
 
 We evaluated whether our final model performs fairly across recipes with different calorie levels. Specifically, we compared the model’s **macro precision** for:
 
@@ -219,9 +230,7 @@ We evaluated whether our final model performs fairly across recipes with differe
 
 We used **macro precision** as our evaluation metric because it evenly weighs performance across all rating classes, making it appropriate for our imbalanced multiclass setting.
 
----
-
-#### Hypotheses
+### Hypotheses
 - **Null Hypothesis (H₀):** There is no difference in macro precision between low- and high-calorie recipes; any observed difference is due to random chance.  
 - **Alternative Hypothesis (H₁):** There is a statistically significant difference in macro precision between the two groups.
 
@@ -232,7 +241,6 @@ We ran a permutation test using the **difference in macro precision** (Low – H
 - **Statistical Significance:** **No**  
 - **Conclusion:** We fail to reject the null hypothesis. The precision difference between low- and high-calorie groups is not statistically significant, so we find no evidence of unfairness in model precision based on calorie level.
 
----
 
 <iframe src="assets/fairness_permutation_precision.html" width="850" height="600" frameborder="0"></iframe>
 <figcaption align="center">Permutation Test: Precision Difference (Low Calorie - High Calorie)</figcaption>
