@@ -105,3 +105,47 @@ This line plot reveals a few important patterns:
 - There’s a consistent **cluster of low-rated recipes below 100% DV** of fat, suggesting low-fat recipes may underperform in user satisfaction more often than others.
 
 This aggregation helped shape our hypothesis: *Does fat content actually affect how a recipe is rated?* The variability in min ratings suggested a possible direction for deeper statistical testing.
+
+## 🧩 Assessment of Missingness
+
+### NMAR Analysis
+
+We believe the `rating` column is **Not Missing At Random (NMAR)**. The missingness is likely tied to the **perceived value the recipe itself** — for example, extremely simple or popular recipes may not get reviews because users feel there's nothing new to add. This makes the missingness dependent on an user internal reasoning, not by an observable value in the dataset. Since this decision depends on the value itself, we classify `rating` as NMAR.
+
+To reclassify it as MAR, we would need an external feature such as user behavior logs to measure how well a user interacts with the recipes, which we do not have.
+
+---
+
+### 🔄 Permutation Tests: Is `rating` Missingness Dependent?
+
+We tested whether the missingness in the `rating` column depends on other observed features by conducting permutation tests. Specifically, we tested for dependency on `total fat (PDV)` and `minutes`.
+
+#### Rating Missingness vs Total Fat (Dependent → MAR)
+
+**Null Hypothesis**: Missingness in `rating` is independent of `total fat (PDV)`  
+**Alternative Hypothesis**: Missingness in `rating` depends on `total fat (PDV)`
+
+- **Observed Statistic**: 5.7406  
+- **P-value**: 0.0000
+
+<iframe src="assets/missingness_tf.html" width="800" height="600" frameborder="0"></iframe>
+
+**Conclusion**: The result is statistically significant, so we reject the null hypothesis. This suggests that **recipes with very high or very low fat content may be more or less likely to receive a rating**, implying the missingness is **MAR** on `total fat (PDV)`.
+
+---
+
+#### Rating Missingness vs Minutes (Independent → MCAR)
+
+**Null Hypothesis**: Missingness in `rating` is independent of `minutes`  
+**Alternative Hypothesis**: Missingness in `rating` depends on `minutes`
+
+- **Observed Statistic**: 51.4524  
+- **P-value**: 0.1170
+
+<iframe src="assets/missingness_minutes.html" width="800" height="600" frameborder="0"></iframe>
+
+**Conclusion**: The result is not statistically significant, so we fail to reject the null. This supports that **rating missingness is likely MCAR with respect to cooking time** (`minutes`), meaning people don’t forget to rate just because the recipe took longer.
+
+---
+
+These results provide important context for modeling, especially since it's not missing completely at random.
