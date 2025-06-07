@@ -188,9 +188,22 @@ To establish a strong starting point for our prediction task, we trained a basel
 
 Both TF-IDF features are **nominal categorical variables**, and we encoded them using **One-Hot Encoding** inside a `ColumnTransformer`. These transformations were wrapped in a full `Pipeline` with a `RandomForestClassifier`. This pipeline ensured consistency and reproducibility during training and evaluation.
 
-We evaluated the model using the **macro-averaged F1 score** to account for class imbalance. Our baseline model achieved a score of **0.6502**, suggesting decent performance on a challenging multiclass task. The confusion matrix below shows that the model is best at predicting 4- and 5-star ratings, but performs poorly on lower ones.
+We evaluated the model using the **macro-averaged F1 score** to account for class imbalance. Our baseline model achieved a score of **0.6986**, suggesting decent performance on a challenging multiclass task. The confusion matrix below shows that the model is best at predicting 4- and 5-star ratings, but performs poorly on lower ones.
 
 <figure markdown>
   <img src="assets/baseline_confusion_matrix.png" width="400" alt="Baseline Confusion Matrix">
   <figcaption align="center">Confusion matrix of the baseline model predictions</figcaption>
+</figure>
+
+### Final Model
+
+To improve our predictions from the baseline model, we engineered two new quantitative features: `fat_calorie_ratio`, which measures how much fat a recipe contains per calorie, and `minutes_per_step`, which captures the complexity of a recipe’s instructions. These features aim to reflect how dense or time-intensive a recipe is—important aspects that may influence how users rate recipes. We kept our TF-IDF based ingredient and review features and added numeric transformations using `StandardScaler`, plus threshold-based binarizations for step and ingredient counts.
+
+Our final model used a `RandomForestClassifier`, selected for its ability to capture nonlinear interactions in the data without requiring heavy preprocessing. We used `GridSearchCV` to tune hyperparameters like the number of estimators, max tree depth, minimum samples per split, and class weight. These were chosen to explore the trade-offs between overfitting and underfitting, and to account for possible class imbalances in rating distributions.
+
+The best performing model achieved a **macro F1 score of 0.7446**, outperforming the baseline’s 0.6986. This suggests that the new features provided more predictive power and helped the model generalize better. Below is the confusion matrix for our final model’s predictions, showing improved performance especially in the mid-to-high rating range.
+
+<figure markdown>
+  <img src="assets/final_confusion_matrix.png" width="400" alt="Final Confusion Matrix">
+  <figcaption align="center">Confusion matrix of the final model predictions</figcaption>
 </figure>
