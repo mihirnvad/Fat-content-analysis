@@ -68,17 +68,19 @@ Here’s a snapshot of the cleaned dataset:
 | 194.8        | 20               | 40      | 5      | 9              |
 | 194.8        | 20               | 40      | 5      | 9              |
 
-This pipeline reduced noise and resulted in a cleaner, structured dataset with 220,373 rows.
+This cleaning reduced noise and resulted in a cleaner, structured dataset with 220,373 rows.
 
 ### 📊 Univariate Analysis: Distribution of Total Fat
 <iframe src="assets/tot_fat_dist.html" width="800" height="600" frameborder="0"></iframe>
 
-Saturated fat follows a left-skewed distribution, centered around 20–30% of daily value, with some very high outliers.
+We first examined the distribution of total fat across all recipes. Most recipes have a fat content between 10%–30% of the daily recommended value, with a steep drop-off afterward. A long right tail suggests a smaller subset of high-fat recipes. The distrubtion is highly skewed to the right.
+
 
 ### 📈 Bivariate Analysis: Relationship between Total Fat and Mean Recipe Rating
 <iframe src="assets/totalfatandmeanreciperating.html" width="800" height="600" frameborder="0"></iframe>
 
-There’s a weak upward trend: recipes with longer prep times tend to have more saturated fat, possibly due to oil-heavy methods like frying or roasting.
+Next, we looked at the relationship between total fat and the mean recipe rating. Despite some noise, there appears to be a loose cluster of high-fat recipes receiving high ratings, but overall, the correlation is weak. This suggests that while fat content may contribute to taste, it's not the sole factor driving user ratings.
+
 
 ### 📋 Pivot Table: Rating vs Fat and Minutes
 
