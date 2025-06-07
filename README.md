@@ -70,19 +70,19 @@ Here’s a snapshot of the cleaned dataset:
 
 This cleaning reduced noise and resulted in a cleaner, structured dataset with 220,373 rows.
 
-### 📊 Univariate Analysis: Distribution of Total Fat
+### Univariate Analysis: Distribution of Total Fat
 <iframe src="assets/tot_fat_dist.html" width="800" height="600" frameborder="0"></iframe>
 
 We first examined the distribution of total fat across all recipes. Most recipes have a fat content between 10%–30% of the daily recommended value, with a steep drop-off afterward. A long right tail suggests a smaller subset of high-fat recipes. The distrubtion is highly skewed to the right.
 
 
-### 📈 Bivariate Analysis: Relationship between Total Fat and Mean Recipe Rating
+### Bivariate Analysis: Relationship between Total Fat and Mean Recipe Rating
 <iframe src="assets/totalfatandmeanreciperating.html" width="800" height="600" frameborder="0"></iframe>
 
 Next, we looked at the relationship between total fat and the mean recipe rating. Despite some noise, there appears to be a loose cluster of high-fat recipes receiving high ratings, but overall, the correlation is weak. This suggests that while fat content may contribute to taste, it's not the sole factor driving user ratings.
 
 
-### 📊 Interesting Aggregates: Pivot Table: Fat Content by Recipe Rating
+### Interesting Aggregates: Pivot Table: Fat Content by Recipe Rating
 
 We grouped recipes by their user ratings to analyze whether higher-rated recipes tend to have more or less fat content and longer preparation time.
 Here is a snapshot of my pivot table:
@@ -106,7 +106,7 @@ This line plot reveals a few important patterns:
 
 This aggregation helped shape our hypothesis: *Does fat content actually affect how a recipe is rated?* The variability in min ratings suggested a possible direction for deeper statistical testing.
 
-## 🧩 Assessment of Missingness
+## Assessment of Missingness
 
 ### NMAR Analysis
 
@@ -116,7 +116,7 @@ To reclassify it as MAR, we would need an external feature such as user behavior
 
 ---
 
-### 🔄 Permutation Tests: Is `rating` Missingness Dependent?
+### Permutation Tests: Is `rating` Missingness Dependent?
 
 We tested whether the missingness in the `rating` column depends on other observed features by conducting permutation tests. Specifically, we tested for dependency on `total fat (PDV)` and `minutes`.
 
@@ -150,7 +150,7 @@ We tested whether the missingness in the `rating` column depends on other observ
 
 These results provide important context for modeling, especially since it's not missing completely at random.
 
-## 🔬 Hypothesis Testing
+## Hypothesis Testing
 
 We investigated whether **low-rated recipes tend to have more fat** than high-rated ones.
 
@@ -174,10 +174,23 @@ We used the **difference in mean total fat content** (low - high) as our test st
 ### Conclusion  
 Since the p-value is below 0.05, we **reject the null hypothesis**. This provides **statistical evidence** that low-rated recipes tend to have slightly higher fat content than high-rated ones. While the relationship is subtle, the result suggests the idea that excessive fat might negatively impact user satisfaction.
 
-## 🧠 Step 5: Framing a Prediction Problem
+## Framing a Prediction Problem
 
 We aim to predict a recipe’s user rating based on its features, including ingredients, nutrition info, and reviews. This is a **multiclass classification** problem, where the response variable is the `rating` (1–5). We chose this because rating reflects user satisfaction and ties directly to our project’s central question. It also allows us to explore how recipe characteristics influence user preferences.
 
 To evaluate our model, we use the **macro-averaged F1 score** instead of accuracy. This is because our class distribution is imbalanced — most ratings are 4s and 5s. F1 macro equally weighs each class and gives better insight into underrepresented ratings. It’s a more fair and informative metric for this use case.
 
-At prediction time, we only include features known when a recipe is submitted. This includes ingredients, nutritional data, time to prepare, and user review text. We exclude future-leaking info like average rating to preserve real-world relevance. This ensures our model makes fair predictions without cheating with future data.
+At prediction time, we only include features known when a recipe is submitted. This includes ingredients, nutritional data, time to prepare, and user review text. We exclude future-leaking info like average rating to preserve  relevance. This ensures our model makes fair predictions without cheating with future data.
+
+### Baseline Model
+
+To establish a strong starting point for our prediction task, we trained a baseline model using two categorical features: the highest TF-IDF word found in a recipe’s ingredient list and the highest TF-IDF word from its review text. These two features summarize textual input into interpretable signals. We sampled 5,000 rows to reduce memory strain and excluded rows with missing reviews or ratings.
+
+Both TF-IDF features are **nominal categorical variables**, and we encoded them using **One-Hot Encoding** inside a `ColumnTransformer`. These transformations were wrapped in a full `Pipeline` with a `RandomForestClassifier`. This pipeline ensured consistency and reproducibility during training and evaluation.
+
+We evaluated the model using the **macro-averaged F1 score** to account for class imbalance. Our baseline model achieved a score of **0.6502**, suggesting decent performance on a challenging multiclass task. The confusion matrix below shows that the model is best at predicting 4- and 5-star ratings, but performs poorly on lower ones.
+
+<figure markdown>
+  <img src="assets/baseline_confusion_matrix.png" width="400" alt="Baseline Confusion Matrix">
+  <figcaption align="center">Confusion matrix of the baseline model predictions</figcaption>
+</figure>
