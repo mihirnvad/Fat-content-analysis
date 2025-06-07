@@ -73,7 +73,7 @@ This cleaning reduced noise and resulted in a cleaner, structured dataset with 2
 
 ### Univariate Analysis: Distribution of Total Fat
 
-<iframe src="assets/tot_fat_dist.html" width="800" height="600" frameborder="0"></iframe>
+<iframe src="assets/tot_fat_dist.html" width="800" height="500" frameborder="0"></iframe>
 
 We first examined the distribution of total fat across all recipes. Most recipes have a fat content between 10%–30% of the daily recommended value, with a steep drop-off afterward. A long right tail suggests a smaller subset of high-fat recipes. The distrubtion is highly skewed to the right.
 
@@ -132,7 +132,7 @@ We tested whether the missingness in the `rating` column depends on other observ
 - **Observed Statistic**: 5.7406  
 - **P-value**: 0.0000
 
-Below we show the distrubution of total fat and the missingness of rating:
+Below we show the permutation distrubution of total fat and the missingness of rating:
 <iframe src="assets/missingness_tf.html" width="800" height="600" frameborder="0"></iframe>
 
 **Conclusion**: The result is statistically significant, so we reject the null hypothesis. This suggests that **recipes with very high or very low fat content may be more or less likely to receive a rating**, implying the missingness is **MAR** on `total fat (PDV)`.
@@ -145,7 +145,7 @@ Below we show the distrubution of total fat and the missingness of rating:
 - **Observed Statistic**: 51.4524  
 - **P-value**: 0.1170
 
-Below we show the distrubution of minutes and the missingness of rating:
+Below we show the permutation distrubution of minutes and the missingness of rating:
 <iframe src="assets/missingness_minutes.html" width="800" height="600" frameborder="0"></iframe>
 
 **Conclusion**: The result is not statistically significant, so we fail to reject the null. This fails tosupports that **rating missingness is due to cooking time** (`minutes`), meaning people don’t forget to rate just because the recipe took longer.
@@ -173,6 +173,7 @@ We used the **difference in mean total fat content** (low - high) as our test st
 - **P-value**: 0.0200  
 - **Significance Level (α)**: 0.05  
 
+Below we show the result of the permutation test of total fat by rating group:
 <iframe src="assets/total_fat_byrating_group.html" width="800" height="600" frameborder="0"></iframe>
 
 ### Conclusion  
