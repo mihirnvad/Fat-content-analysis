@@ -2,7 +2,7 @@
 DSC80 project: Analyzing Total Fat Content In Relation To Recipe Ratings
 
 # Recipes and Ratings: Total Fat Content and Recipe Ratings
-**Mihir Vad**
+**By: Mihir Vad**
 
 ---
 
@@ -41,6 +41,7 @@ Datasets Used:
 
 
 After merging, the combined dataset contains 234,429 rows of recipes with corresponding reviews and ratings. The columns I mainly focused on were total fat (PDV) and rating for the question: 
+
 ### Does the total fat content of a recipe relate to how highly it’s rated by users?
 
 We also explore this relationship through hypothesis testing and a predictive model that estimates a recipe’s rating based on its fat content and other features.
@@ -71,12 +72,14 @@ Here’s a snapshot of the cleaned dataset:
 This cleaning reduced noise and resulted in a cleaner, structured dataset with 220,373 rows.
 
 ### Univariate Analysis: Distribution of Total Fat
+
 <iframe src="assets/tot_fat_dist.html" width="800" height="600" frameborder="0"></iframe>
 
 We first examined the distribution of total fat across all recipes. Most recipes have a fat content between 10%–30% of the daily recommended value, with a steep drop-off afterward. A long right tail suggests a smaller subset of high-fat recipes. The distrubtion is highly skewed to the right.
 
 
 ### Bivariate Analysis: Relationship between Total Fat and Mean Recipe Rating
+
 <iframe src="assets/totalfatandmeanreciperating.html" width="800" height="600" frameborder="0"></iframe>
 
 Next, we looked at the relationship between total fat and the mean recipe rating. Despite some noise, there appears to be a loose cluster of high-fat recipes receiving high ratings, but overall, the correlation is weak. This suggests that while fat content may contribute to taste, it's not the sole factor driving user ratings.
@@ -96,6 +99,7 @@ Here is a snapshot of my pivot table:
 |            20 | 4.69273 |  4.86667 |     1 |     5 |
 
 #### Trends of the Pivot Table
+
 <iframe src="assets/pivottabletrends.html" width="800" height="600" frameborder="0"></iframe>
 
 This line plot reveals a few important patterns:
@@ -116,8 +120,6 @@ We believe the `rating` column is **Not Missing At Random (NMAR)**. The missingn
 
 To reclassify it as MAR, we would need an external feature such as user behavior logs to measure how well a user interacts with the recipes, which we do not have.
 
----
-
 ### Permutation Tests: Is `rating` Missingness Dependent?
 
 We tested whether the missingness in the `rating` column depends on other observed features by conducting permutation tests. Specifically, we tested for dependency on `total fat (PDV)` and `minutes`.
@@ -130,6 +132,7 @@ We tested whether the missingness in the `rating` column depends on other observ
 - **Observed Statistic**: 5.7406  
 - **P-value**: 0.0000
 
+Below we show the distrubution of total fat and the missingness of rating:
 <iframe src="assets/missingness_tf.html" width="800" height="600" frameborder="0"></iframe>
 
 **Conclusion**: The result is statistically significant, so we reject the null hypothesis. This suggests that **recipes with very high or very low fat content may be more or less likely to receive a rating**, implying the missingness is **MAR** on `total fat (PDV)`.
@@ -144,6 +147,7 @@ We tested whether the missingness in the `rating` column depends on other observ
 - **Observed Statistic**: 51.4524  
 - **P-value**: 0.1170
 
+Below we show the distrubution of minutes and the missingness of rating:
 <iframe src="assets/missingness_minutes.html" width="800" height="600" frameborder="0"></iframe>
 
 **Conclusion**: The result is not statistically significant, so we fail to reject the null. This fails tosupports that **rating missingness is due to cooking time** (`minutes`), meaning people don’t forget to rate just because the recipe took longer.
