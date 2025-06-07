@@ -73,7 +73,7 @@ This cleaning reduced noise and resulted in a cleaner, structured dataset with 2
 
 ### Univariate Analysis: Distribution of Total Fat
 
-<iframe src="assets/tot_fat_dist.html" width="850" height="500" frameborder="0"></iframe>
+<iframe src="assets/tot_fat_dist.html" width="820" height="500" frameborder="0"></iframe>
 
 We first examined the distribution of total fat across all recipes. Most recipes have a fat content between 10%–30% of the daily recommended value, with a steep drop-off afterward. A long right tail suggests a smaller subset of high-fat recipes. The distrubtion is highly skewed to the right.
 
