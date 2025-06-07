@@ -8,12 +8,11 @@ DSC80 project: Analyzing Total Fat Content In Relation To Recipe Ratings
 
 ## Introduction
 
-This project analyzes recipe and review data from Food.com to explore and model what influences a recipe’s rating. The core goal is to predict a recipe's rating based on its ingredients, review, and nutritional value.
+This project analyzes recipe and review data from Food.com to explore and model what influences a recipe’s rating. The goal is to predict a recipe's rating based on its ingredients, review, and nutritional value.
 
 The motivation behind this question is simple but powerful: can we determine whether total fat content influences how highly a recipe is rated? Given the  online social presence for cooking platforms, this seeks to help users look through healthy eating options.
 
-Datasets Used
-We work with two datasets:
+Datasets Used:
 
 ### 1. Recipes Dataset (83,782 entries)
 
@@ -41,7 +40,8 @@ We work with two datasets:
 | `review`    | Review Text        |
 
 
-After merging, the combined dataset contains 234,429 rows of recipes with corresponding reviews and ratings. The columns I mainly focused on were total fat (PDV) and rating for the question: Does the total fat content of a recipe relate to how highly it’s rated by users?
+After merging, the combined dataset contains 234,429 rows of recipes with corresponding reviews and ratings. The columns I mainly focused on were total fat (PDV) and rating for the question: 
+### Does the total fat content of a recipe relate to how highly it’s rated by users?
 
 We also explore this relationship through hypothesis testing and a predictive model that estimates a recipe’s rating based on its fat content and other features.
 
