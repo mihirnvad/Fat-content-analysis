@@ -8,33 +8,38 @@ DSC80 project: Analyzing Total Fat Content In Relation To Recipe Ratings
 
 ## Introduction
 
-This project analyzes recipe and review data from Food.com to explore and model what influences a recipe’s rating. The core goal is to predict a recipe's rating based on its ingredients, review, and nutritional profile.
+This project analyzes recipe and review data from Food.com to explore and model what influences a recipe’s rating. The core goal is to predict a recipe's rating based on its ingredients, review, and nutritional value.
 
-The motivation behind this question is simple but powerful: can we learn what makes a recipe popular or well-received? Given the increasing reliance on online platforms for cooking ideas, helping users navigate healthy and well-rated options can have real-world impact.
+The motivation behind this question is simple but powerful: can we determine whether total fat content influences how highly a recipe is rated? Given the  online social presence for cooking platforms, this seeks to help users look through healthy eating options.
 
 Datasets Used
 We work with two datasets:
 
 1. Recipes Dataset (83,782 entries)
-Column	Description
-name	Name of the recipe
-id	Unique recipe ID
-minutes	Total time in minutes to prepare the recipe
-nutrition	List containing [calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates] as % daily values
-n_steps	Number of steps in the recipe
-steps	Step-by-step recipe instructions
-description	User-provided recipe description
-tags	Tags like cuisine, meal type, etc.
+|Column	                 |Description|
+|---                     |---        |
+|`'name'	`            |Recipe Name|
+|`'id'`	                 |Recipe ID|
+|`'minutes'`	         |Time to Prepare Recipe in Minutes|
+|`'contributor_id'`	     |User ID for Recipe Uploader|
+|`'submitted'`	            | Date of Recipe Submission|
+|`'tags'`	              |Food.com Tags for Recipe|
+|`'nutrition'`	          |List of Nutrition Information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein    (PDV), saturated fat (PDV), carbohydrates (PDV)]; PDV meaning “percentage of daily value”|
+|`'n_steps'`	          |Total Steps in a Recipe|
+|`'steps'`	              |Recipe Steps, in order|
+|`'description'`	     | User-provided description|
+2. Interaction Dataset (Reviews) (731,927 entries)
+|Column|Description|
+|---|---|
+|`'user_id'`	|User ID|
+|`'recipe_id'`	|Recipe ID|
+|`'date'`	|Date of Review|
+|`'rating'`	|Rating|
+|`'review'`	|Review Text|
 
-2. Reviews Dataset (731,927 entries)
-Column	Description
-user_id	Unique ID of the user posting the review
-recipe_id	The ID of the recipe reviewed
-rating	User rating from 1 to 5 stars
-review	Text review of the recipe
-date	Date the review was submitted
+After merging, the combined dataset contains 234,429 rows of recipes with corresponding reviews and ratings. The columns I mainly focused on were total fat (PDV) and rating.
 
-After merging, the combined dataset contains 234,429 rows of recipes with corresponding reviews and ratings. This allows us to investigate our central question and build a model to predict how users will rate a given recipe.
+We also explore this relationship through hypothesis testing and a predictive model that estimates a recipe’s rating based on its fat content and other features.
 
 ---
 
