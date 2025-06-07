@@ -176,17 +176,8 @@ Since the p-value is below 0.05, we **reject the null hypothesis**. This provide
 
 ## 🧠 Step 5: Framing a Prediction Problem
 
-We aim to predict a recipe’s user rating based on its features, including ingredients, nutrition info, and reviews.  
-This is a **multiclass classification** problem, where the response variable is the `rating` (1–5).  
-We chose this because rating reflects user satisfaction and ties directly to our project’s central question.  
-It also allows us to explore how recipe characteristics influence user preferences.
+We aim to predict a recipe’s user rating based on its features, including ingredients, nutrition info, and reviews. This is a **multiclass classification** problem, where the response variable is the `rating` (1–5). We chose this because rating reflects user satisfaction and ties directly to our project’s central question. It also allows us to explore how recipe characteristics influence user preferences.
 
-To evaluate our model, we use the **macro-averaged F1 score** instead of accuracy.  
-This is because our class distribution is imbalanced — most ratings are 4s and 5s.  
-F1 macro equally weighs each class and gives better insight into underrepresented ratings.  
-It’s a more fair and informative metric for this use case.
+To evaluate our model, we use the **macro-averaged F1 score** instead of accuracy. This is because our class distribution is imbalanced — most ratings are 4s and 5s. F1 macro equally weighs each class and gives better insight into underrepresented ratings. It’s a more fair and informative metric for this use case.
 
-At prediction time, we only include features known when a recipe is submitted.  
-This includes ingredients, nutritional data, time to prepare, and user review text.  
-We exclude future-leaking info like average rating to preserve real-world relevance.  
-This ensures our model makes fair predictions without cheating with future data.
+At prediction time, we only include features known when a recipe is submitted. This includes ingredients, nutritional data, time to prepare, and user review text. We exclude future-leaking info like average rating to preserve real-world relevance. This ensures our model makes fair predictions without cheating with future data.
