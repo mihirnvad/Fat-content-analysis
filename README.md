@@ -120,7 +120,7 @@ To reclassify it as MAR, we would need an external feature such as user behavior
 
 We tested whether the missingness in the `rating` column depends on other observed features by conducting permutation tests. Specifically, we tested for dependency on `total fat (PDV)` and `minutes`.
 
-#### Rating Missingness vs Total Fat (Dependent → MAR)
+#### Rating Missingness vs Total Fat
 
 **Null Hypothesis**: Missingness in `rating` is independent of `total fat (PDV)`  
 **Alternative Hypothesis**: Missingness in `rating` depends on `total fat (PDV)`
@@ -134,7 +134,7 @@ We tested whether the missingness in the `rating` column depends on other observ
 
 ---
 
-#### Rating Missingness vs Minutes (Independent → MCAR)
+#### Rating Missingness vs Minutes 
 
 **Null Hypothesis**: Missingness in `rating` is independent of `minutes`  
 **Alternative Hypothesis**: Missingness in `rating` depends on `minutes`
@@ -144,8 +144,32 @@ We tested whether the missingness in the `rating` column depends on other observ
 
 <iframe src="assets/missingness_minutes.html" width="800" height="600" frameborder="0"></iframe>
 
-**Conclusion**: The result is not statistically significant, so we fail to reject the null. This supports that **rating missingness is likely MCAR with respect to cooking time** (`minutes`), meaning people don’t forget to rate just because the recipe took longer.
+**Conclusion**: The result is not statistically significant, so we fail to reject the null. This fails tosupports that **rating missingness is due to cooking time** (`minutes`), meaning people don’t forget to rate just because the recipe took longer.
 
 ---
 
 These results provide important context for modeling, especially since it's not missing completely at random.
+
+## 🔬 Hypothesis Testing
+
+We investigated whether **low-rated recipes tend to have more fat** than high-rated ones.
+
+### Research Question  
+> Does the total fat content of a recipe relate to how highly it’s rated by users?
+
+### Hypotheses
+- **Null Hypothesis (H₀):** There is no difference in total fat content between low-rated (≤3 stars) and high-rated (>3 stars) recipes.
+- **Alternative Hypothesis (H₁):** Low-rated recipes tend to have **higher** total fat content than high-rated recipes.
+
+### Test Statistic  
+We used the **difference in mean total fat content** (low - high) as our test statistic. To assess significance, we performed a **permutation test** with 1000 shuffles.
+
+### Results  
+- **Observed Statistic**: 0.5002  
+- **P-value**: 0.0200  
+- **Significance Level (α)**: 0.05  
+
+<iframe src="assets/total_fat_byrating_group.html" width="800" height="600" frameborder="0"></iframe>
+
+### Conclusion  
+Since the p-value is below 0.05, we **reject the null hypothesis**. This provides **statistical evidence** that low-rated recipes tend to have slightly higher fat content than high-rated ones. While the relationship is subtle, the result suggests the idea that excessive fat might negatively impact user satisfaction.
