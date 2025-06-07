@@ -234,7 +234,5 @@ We ran a permutation test using the **difference in macro precision** (Low – H
 
 ---
 
-<figure markdown>
-  <img src="assets/fairness_permutation_precision.png" width="600" alt="Permutation Test Histogram: Precision Difference by Calorie Group">
-  <figcaption align="center">Permutation test of macro precision difference between low- and high-calorie recipes</figcaption>
-</figure>
+<iframe src="assets/fairness_permutation_precision.html" width="850" height="600" frameborder="0"></iframe>
+<figcaption align="center">Permutation Test: Precision Difference (Low Calorie - High Calorie)</figcaption>
