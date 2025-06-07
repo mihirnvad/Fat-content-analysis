@@ -49,21 +49,26 @@ We also explore this relationship through hypothesis testing and a predictive mo
 
 ## Data Cleaning and Exploratory Data Analysis
 
-We cleaned and prepared the dataset by:
-- **Merged** the recipes and reviews datasets on recipe ID.
-- **Removed invalid ratings** (replaced `0` with `NaN`) and computed each recipe’s average rating.
-- **Extracted nutrition values** into separate columns like `calories (#)`, `total fat (PDV)`, etc.
-- **Converted strings to lists** for `tags`, `steps`, and `ingredients`.
-- **Dropped outliers** with calories >1500 or cook time >6 hours.
-- **Engineered new features** like `n_ingredients` and removed irrelevant columns.
-|   calories (#) |   total fat (PDV) |   minutes |   rating |   n_ingredients |
-|---------------:|------------------:|----------:|---------:|----------------:|
-|          138.4 |                10 |        40 |        4 |               9 |
-|          595.1 |                46 |        45 |        5 |              11 |
-|          194.8 |                20 |        40 |        5 |               9 |
-|          194.8 |                20 |        40 |        5 |               9 |
-|          194.8 |                20 |        40 |        5 |               9 |
-This pipeline reduced noise and created a cleaner, more structured dataset wth containing **234,429 rows**.
+We performed the following steps to clean and prepare our data:
+
+- Merged the recipes and reviews datasets on `recipe ID`.
+- Removed invalid ratings (replaced `0` with `NaN`) and computed each recipe’s average rating.
+- Extracted nutrition values into separate columns like `calories (#)`, `total fat (PDV)`, etc.
+- Converted stringified lists into real Python lists for `tags`, `steps`, and `ingredients`.
+- Dropped outliers with `calories > 1500` or `cook time > 360 minutes (6 hours)`.
+- Engineered new features like `n_ingredients` and dropped irrelevant columns.
+
+Here’s a snapshot of the cleaned dataset:
+
+| calories (#) | total fat (PDV) | minutes | rating | n_ingredients |
+|--------------|------------------|---------|--------|----------------|
+| 138.4        | 10               | 40      | 4      | 9              |
+| 595.1        | 46               | 45      | 5      | 11             |
+| 194.8        | 20               | 40      | 5      | 9              |
+| 194.8        | 20               | 40      | 5      | 9              |
+| 194.8        | 20               | 40      | 5      | 9              |
+
+This pipeline reduced noise and resulted in a cleaner, structured dataset with 220,373 rows.
 
 ### 📊 Univariate Analysis: Distribution of Total Fat
 <iframe src="assets/tot_fat_dist.html" width="800" height="600" frameborder="0"></iframe>
