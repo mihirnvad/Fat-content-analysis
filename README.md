@@ -124,7 +124,7 @@ To reclassify it as MAR, we would need an external feature such as user behavior
 
 We tested whether the missingness in the `rating` column depends on other observed features by conducting permutation tests. Specifically, we tested for dependency on `total fat (PDV)` and `minutes`.
 
-#### Rating Missingness vs Total Fat
+#### Rating Missingness vs Total Fat:
 
 **Null Hypothesis**: Missingness in `rating` is independent of `total fat (PDV)`  
 **Alternative Hypothesis**: Missingness in `rating` depends on `total fat (PDV)`
@@ -137,9 +137,7 @@ Below we show the distrubution of total fat and the missingness of rating:
 
 **Conclusion**: The result is statistically significant, so we reject the null hypothesis. This suggests that **recipes with very high or very low fat content may be more or less likely to receive a rating**, implying the missingness is **MAR** on `total fat (PDV)`.
 
----
-
-#### Rating Missingness vs Minutes 
+#### Rating Missingness vs Minutes:
 
 **Null Hypothesis**: Missingness in `rating` is independent of `minutes`  
 **Alternative Hypothesis**: Missingness in `rating` depends on `minutes`
@@ -245,5 +243,5 @@ We ran a permutation test using the **difference in macro precision** (Low – H
 - **Statistical Significance:** **No**  
 - **Conclusion:** We fail to reject the null hypothesis. The precision difference between low- and high-calorie groups is not statistically significant, so we find no evidence of unfairness in model precision based on calorie level.
 
-
+Below we show a distrubution of the fairness permutation:
 <iframe src="assets/fairness_permutation_precision.html" width="850" height="600" frameborder="0"></iframe>
