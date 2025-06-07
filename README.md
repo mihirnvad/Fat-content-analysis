@@ -8,7 +8,33 @@ DSC80 project: Analyzing Total Fat Content In Relation To Recipe Ratings
 
 ## Introduction
 
-This project investigates whether the time it takes to prepare a recipe influences its saturated fat content. Saturated fat is linked to heart disease, and processed foods — often fast or overly complex — are high in it. Using real recipe and review data from Food.com (2008–2018), we explore relationships between prep time and nutritional health, clean the data, analyze trends, test hypotheses, and build a predictive model for saturated fat content.
+This project analyzes recipe and review data from Food.com to explore and model what influences a recipe’s rating. The core goal is to predict a recipe's rating based on its ingredients, review, and nutritional profile.
+
+The motivation behind this question is simple but powerful: can we learn what makes a recipe popular or well-received? Given the increasing reliance on online platforms for cooking ideas, helping users navigate healthy and well-rated options can have real-world impact.
+
+Datasets Used
+We work with two datasets:
+
+1. Recipes Dataset (83,782 entries)
+Column	Description
+name	Name of the recipe
+id	Unique recipe ID
+minutes	Total time in minutes to prepare the recipe
+nutrition	List containing [calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates] as % daily values
+n_steps	Number of steps in the recipe
+steps	Step-by-step recipe instructions
+description	User-provided recipe description
+tags	Tags like cuisine, meal type, etc.
+
+2. Reviews Dataset (731,927 entries)
+Column	Description
+user_id	Unique ID of the user posting the review
+recipe_id	The ID of the recipe reviewed
+rating	User rating from 1 to 5 stars
+review	Text review of the recipe
+date	Date the review was submitted
+
+After merging, the combined dataset contains 234,429 rows of recipes with corresponding reviews and ratings. This allows us to investigate our central question and build a model to predict how users will rate a given recipe.
 
 ---
 
@@ -22,12 +48,12 @@ We cleaned and prepared the dataset by:
 - Adding features like `n_ingredients` and discretized prep time
 
 ### 📊 Distribution of Saturated Fat
-<iframe src="assets/fig1.html" width="800" height="600" frameborder="0"></iframe>
+<iframe src="assets/ratings_dist.html" width="800" height="600" frameborder="0"></iframe>
 
 Saturated fat follows a left-skewed distribution, centered around 20–30% of daily value, with some very high outliers.
 
 ### 📈 Prep Time vs Saturated Fat
-<iframe src="assets/fig2.html" width="800" height="600" frameborder="0"></iframe>
+<iframe src="assets/tot_fat_dist.html" width="800" height="600" frameborder="0"></iframe>
 
 There’s a weak upward trend: recipes with longer prep times tend to have more saturated fat, possibly due to oil-heavy methods like frying or roasting.
 
