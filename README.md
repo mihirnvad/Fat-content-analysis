@@ -82,13 +82,26 @@ We first examined the distribution of total fat across all recipes. Most recipes
 Next, we looked at the relationship between total fat and the mean recipe rating. Despite some noise, there appears to be a loose cluster of high-fat recipes receiving high ratings, but overall, the correlation is weak. This suggests that while fat content may contribute to taste, it's not the sole factor driving user ratings.
 
 
-### 📋 Pivot Table: Rating vs Fat and Minutes
+### 📊 Interesting Aggregates: Pivot Table: Fat Content by Recipe Rating
 
-```markdown
-| Rating | Minutes | Saturated Fat (sat_fat) |
-|--------|---------|--------------------------|
-| 1.0    | 99.67   | 46.68                    |
-| 2.0    | 98.02   | 42.88                    |
-| 3.0    | 87.50   | 40.08                    |
-| 4.0    | 91.58   | 36.43                    |
-| 5.0    |106.92   | 39.23                    |
+We grouped recipes by their user ratings to analyze whether higher-rated recipes tend to have more or less fat content and longer preparation time.
+Here is a snapshot of my pivot table:
+
+|   fat_rounded |    mean |   median |   min |   max |
+|--------------:|--------:|---------:|------:|------:|
+|             0 | 4.69013 |  4.91667 |     1 |     5 |
+|             5 | 4.65141 |  4.83333 |     1 |     5 |
+|            10 | 4.6696  |  4.83333 |     1 |     5 |
+|            15 | 4.68125 |  4.875   |     1 |     5 |
+|            20 | 4.69273 |  4.86667 |     1 |     5 |
+
+#### Trends of the Pivot Table
+<iframe src="assets/pivottabletrends.html" width="800" height="600" frameborder="0"></iframe>
+
+This line plot reveals a few important patterns:
+
+- **Mean and median ratings stay high and stable** across most fat levels, suggesting users rate most recipes positively regardless of fat content.
+- However, the **minimum rating fluctuates wildly** — especially at high fat levels — indicating that while many high-fat recipes are loved, they are also more divisive.
+- There’s a consistent **cluster of low-rated recipes below 100% DV** of fat, suggesting low-fat recipes may underperform in user satisfaction more often than others.
+
+This aggregation helped shape our hypothesis: *Does fat content actually affect how a recipe is rated?* The variability in min ratings suggested a possible direction for deeper statistical testing.
