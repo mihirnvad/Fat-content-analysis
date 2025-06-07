@@ -15,29 +15,33 @@ The motivation behind this question is simple but powerful: can we determine whe
 Datasets Used
 We work with two datasets:
 
-1. Recipes Dataset (83,782 entries)
-|Column	                 |Description|
-|---                     |---        |
-|`'name'	`            |Recipe Name|
-|`'id'`	                 |Recipe ID|
-|`'minutes'`	         |Time to Prepare Recipe in Minutes|
-|`'contributor_id'`	     |User ID for Recipe Uploader|
-|`'submitted'`	            | Date of Recipe Submission|
-|`'tags'`	              |Food.com Tags for Recipe|
-|`'nutrition'`	          |List of Nutrition Information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein    (PDV), saturated fat (PDV), carbohydrates (PDV)]; PDV meaning “percentage of daily value”|
-|`'n_steps'`	          |Total Steps in a Recipe|
-|`'steps'`	              |Recipe Steps, in order|
-|`'description'`	     | User-provided description|
-2. Interaction Dataset (Reviews) (731,927 entries)
-|Column|Description|
-|---|---|
-|`'user_id'`	|User ID|
-|`'recipe_id'`	|Recipe ID|
-|`'date'`	|Date of Review|
-|`'rating'`	|Rating|
-|`'review'`	|Review Text|
+### 1. Recipes Dataset (83,782 entries)
 
-After merging, the combined dataset contains 234,429 rows of recipes with corresponding reviews and ratings. The columns I mainly focused on were total fat (PDV) and rating.
+| Column           | Description                                                                                                                                     |
+|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`           | Recipe Name                                                                                                                                     |
+| `id`             | Recipe ID                                                                                                                                       |
+| `minutes`        | Time to Prepare Recipe in Minutes                                                                                                               |
+| `contributor_id` | User ID for Recipe Uploader                                                                                                                     |
+| `submitted`      | Date of Recipe Submission                                                                                                                       |
+| `tags`           | Food.com Tags for Recipe                                                                                                                        |
+| `nutrition`      | List of Nutrition Info in the form `[calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbs (PDV)]` |
+| `n_steps`        | Total Steps in a Recipe                                                                                                                         |
+| `steps`          | Recipe Steps, in Order                                                                                                                          |
+| `description`    | User-Provided Description                                                                                                                       |
+
+### 2. Interaction Dataset (Reviews) (731,927 entries)
+
+| Column      | Description        |
+|-------------|--------------------|
+| `user_id`   | User ID            |
+| `recipe_id` | Recipe ID          |
+| `date`      | Date of Review     |
+| `rating`    | Rating             |
+| `review`    | Review Text        |
+
+
+After merging, the combined dataset contains 234,429 rows of recipes with corresponding reviews and ratings. The columns I mainly focused on were total fat (PDV) and rating for the question: Does the total fat content of a recipe relate to how highly it’s rated by users?
 
 We also explore this relationship through hypothesis testing and a predictive model that estimates a recipe’s rating based on its fat content and other features.
 
@@ -46,19 +50,28 @@ We also explore this relationship through hypothesis testing and a predictive mo
 ## Data Cleaning and Exploratory Data Analysis
 
 We cleaned and prepared the dataset by:
-- Merging recipes and reviews
-- Converting `nutrition` into separate columns
-- Replacing invalid ratings (0s) with `NaN`
-- Removing outliers in calories and minutes
-- Adding features like `n_ingredients` and discretized prep time
+- **Merged** the recipes and reviews datasets on recipe ID.
+- **Removed invalid ratings** (replaced `0` with `NaN`) and computed each recipe’s average rating.
+- **Extracted nutrition values** into separate columns like `calories (#)`, `total fat (PDV)`, etc.
+- **Converted strings to lists** for `tags`, `steps`, and `ingredients`.
+- **Dropped outliers** with calories >1500 or cook time >6 hours.
+- **Engineered new features** like `n_ingredients` and removed irrelevant columns.
+|   calories (#) |   total fat (PDV) |   minutes |   rating |   n_ingredients |
+|---------------:|------------------:|----------:|---------:|----------------:|
+|          138.4 |                10 |        40 |        4 |               9 |
+|          595.1 |                46 |        45 |        5 |              11 |
+|          194.8 |                20 |        40 |        5 |               9 |
+|          194.8 |                20 |        40 |        5 |               9 |
+|          194.8 |                20 |        40 |        5 |               9 |
+This pipeline reduced noise and created a cleaner, more structured dataset wth containing **234,429 rows**.
 
-### 📊 Distribution of Saturated Fat
-<iframe src="assets/ratings_dist.html" width="800" height="600" frameborder="0"></iframe>
+### 📊 Univariate Analysis: Distribution of Total Fat
+<iframe src="assets/tot_fat_dist.html" width="800" height="600" frameborder="0"></iframe>
 
 Saturated fat follows a left-skewed distribution, centered around 20–30% of daily value, with some very high outliers.
 
-### 📈 Prep Time vs Saturated Fat
-<iframe src="assets/tot_fat_dist.html" width="800" height="600" frameborder="0"></iframe>
+### 📈 Bivariate Analysis: Relationship between Total Fat and Mean Recipe Rating
+<iframe src="assets/totalfatandmeanreciperating.html" width="800" height="600" frameborder="0"></iframe>
 
 There’s a weak upward trend: recipes with longer prep times tend to have more saturated fat, possibly due to oil-heavy methods like frying or roasting.
 
