@@ -182,7 +182,7 @@ To evaluate our model, we use the **macro-averaged F1 score** instead of accurac
 
 At prediction time, we only include features known when a recipe is submitted. This includes ingredients, nutritional data, time to prepare, and user review text. We exclude future-leaking info like average rating to preserve  relevance. This ensures our model makes fair predictions without cheating with future data.
 
-### Baseline Model
+## Baseline Model
 
 To establish a strong starting point for our prediction task, we trained a baseline model using two categorical features: the highest TF-IDF word found in a recipe’s ingredient list and the highest TF-IDF word from its review text. These two features summarize textual input into interpretable signals. We sampled 5,000 rows to reduce memory strain and excluded rows with missing reviews or ratings.
 
@@ -195,15 +195,46 @@ We evaluated the model using the **macro-averaged F1 score** to account for clas
   <figcaption align="center">Confusion matrix of the baseline model predictions</figcaption>
 </figure>
 
-### Final Model
+## Final Model
 
 To improve our predictions from the baseline model, we engineered two new quantitative features: `fat_calorie_ratio`, which measures how much fat a recipe contains per calorie, and `minutes_per_step`, which captures the complexity of a recipe’s instructions. These features aim to reflect how dense or time-intensive a recipe is—important aspects that may influence how users rate recipes. We kept our TF-IDF based ingredient and review features and added numeric transformations using `StandardScaler`, plus threshold-based binarizations for step and ingredient counts.
 
 Our final model used a `RandomForestClassifier`, selected for its ability to capture nonlinear interactions in the data without requiring heavy preprocessing. We used `GridSearchCV` to tune hyperparameters like the number of estimators, max tree depth, minimum samples per split, and class weight. These were chosen to explore the trade-offs between overfitting and underfitting, and to account for possible class imbalances in rating distributions.
+
+To optimize our final model, we performed a grid search over several key hyperparameters of the RandomForestClassifier. We tuned n_estimators, which determines the number of trees in the forest, testing values of 100 and 200 to balance performance and training time. We adjusted max_depth to control the complexity of each tree, trying values of 20 and 30 to prevent both overfitting and underfitting. Additionally, we experimented with min_samples_split values of 2 and 5, which set the minimum number of samples needed to split an internal node — higher values can mitigate overfitting. Finally, we tested class_weight settings of None and 'balanced' to address potential class imbalance in the ratings. These hyperparameters were chosen because they directly impact model flexibility, generalization, and fairness across classes.
 
 The best performing model achieved a **macro F1 score of 0.7446**, outperforming the baseline’s 0.6986. This suggests that the new features provided more predictive power and helped the model generalize better. Below is the confusion matrix for our final model’s predictions, showing improved performance especially in the mid-to-high rating range.
 
 <figure markdown>
   <img src="assets/final_confusion_matrix.png" width="400" alt="Final Confusion Matrix">
   <figcaption align="center">Confusion matrix of the final model predictions</figcaption>
+</figure>
+
+### Step 8: Evaluating Model Fairness
+
+We evaluated whether our final model performs fairly across recipes with different calorie levels. Specifically, we compared the model’s **macro precision** for:
+
+- **Group X:** Low-calorie recipes (≤ 1000 calories)  
+- **Group Y:** High-calorie recipes (> 1000 calories)
+
+We used **macro precision** as our evaluation metric because it evenly weighs performance across all rating classes, making it appropriate for our imbalanced multiclass setting.
+
+---
+
+#### Hypotheses
+- **Null Hypothesis (H₀):** There is no difference in macro precision between low- and high-calorie recipes; any observed difference is due to random chance.  
+- **Alternative Hypothesis (H₁):** There is a statistically significant difference in macro precision between the two groups.
+
+We ran a permutation test using the **difference in macro precision** (Low – High) as our test statistic, with a significance level of **α = 0.05**.
+
+- **Observed Difference:** **0.1780**  
+- **P-value:** **0.6760**  
+- **Statistical Significance:** **No**  
+- **Conclusion:** We fail to reject the null hypothesis. The precision difference between low- and high-calorie groups is not statistically significant, so we find no evidence of unfairness in model precision based on calorie level.
+
+---
+
+<figure markdown>
+  <img src="assets/fairness_permutation_precision.png" width="600" alt="Permutation Test Histogram: Precision Difference by Calorie Group">
+  <figcaption align="center">Permutation test of macro precision difference between low- and high-calorie recipes</figcaption>
 </figure>
