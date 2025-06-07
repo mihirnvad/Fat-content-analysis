@@ -77,7 +77,7 @@ We first examined the distribution of total fat across all recipes. Most recipes
 
 ### Bivariate Analysis: Relationship between Total Fat and Mean Recipe Rating
 
-<iframe src="assets/totalfatandmeanreciperating.html" width="820" height="400" frameborder="0"></iframe>
+<iframe src="assets/totalfatandmeanreciperating.html" width="820" height="500" frameborder="0"></iframe>
 
 Next, we looked at the relationship between total fat and the mean recipe rating. Despite some noise, there appears to be a loose cluster of high-fat recipes receiving high ratings, but overall, the correlation is weak. This suggests that while fat content may contribute to taste, it's not the sole factor driving user ratings.
 
