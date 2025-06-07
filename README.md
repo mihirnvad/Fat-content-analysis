@@ -80,7 +80,7 @@ We first examined the distribution of total fat across all recipes. Most recipes
 
 ### Bivariate Analysis: Relationship between Total Fat and Mean Recipe Rating
 
-<iframe src="assets/totalfatandmeanreciperating.html" width="800" height="600" frameborder="0"></iframe>
+<iframe src="assets/totalfatandmeanreciperating.html" width="820" height="500" frameborder="0"></iframe>
 
 Next, we looked at the relationship between total fat and the mean recipe rating. Despite some noise, there appears to be a loose cluster of high-fat recipes receiving high ratings, but overall, the correlation is weak. This suggests that while fat content may contribute to taste, it's not the sole factor driving user ratings.
 
@@ -100,7 +100,7 @@ Here is a snapshot of my pivot table:
 
 #### Trends of the Pivot Table
 
-<iframe src="assets/pivottabletrends.html" width="800" height="600" frameborder="0"></iframe>
+<iframe src="assets/pivottabletrends.html" width="820" height="500" frameborder="0"></iframe>
 
 This line plot reveals a few important patterns:
 
@@ -133,7 +133,7 @@ We tested whether the missingness in the `rating` column depends on other observ
 - **P-value**: 0.0000
 
 Below we show the permutation distrubution of total fat and the missingness of rating:
-<iframe src="assets/missingness_tf.html" width="800" height="600" frameborder="0"></iframe>
+<iframe src="assets/missingness_tf.html" width="820" height="500" frameborder="0"></iframe>
 
 **Conclusion**: The result is statistically significant, so we reject the null hypothesis. This suggests that **recipes with very high or very low fat content may be more or less likely to receive a rating**, implying the missingness is **MAR** on `total fat (PDV)`.
 
@@ -146,7 +146,7 @@ Below we show the permutation distrubution of total fat and the missingness of r
 - **P-value**: 0.1170
 
 Below we show the permutation distrubution of minutes and the missingness of rating:
-<iframe src="assets/missingness_minutes.html" width="800" height="600" frameborder="0"></iframe>
+<iframe src="assets/missingness_minutes.html" width="820" height="500" frameborder="0"></iframe>
 
 **Conclusion**: The result is not statistically significant, so we fail to reject the null. This fails tosupports that **rating missingness is due to cooking time** (`minutes`), meaning people don’t forget to rate just because the recipe took longer.
 
@@ -174,7 +174,7 @@ We used the **difference in mean total fat content** (low - high) as our test st
 - **Significance Level (α)**: 0.05  
 
 Below we show the result of the permutation test of total fat by rating group:
-<iframe src="assets/total_fat_byrating_group.html" width="800" height="600" frameborder="0"></iframe>
+<iframe src="assets/total_fat_byrating_group.html" width="820" height="500" frameborder="0"></iframe>
 
 ### Conclusion  
 Since the p-value is below 0.05, we **reject the null hypothesis**. This provides **statistical evidence** that low-rated recipes tend to have slightly higher fat content than high-rated ones. While the relationship is subtle, the result suggests the idea that excessive fat might negatively impact user satisfaction.
@@ -245,4 +245,4 @@ We ran a permutation test using the **difference in macro precision** (Low – H
 - **Conclusion:** We fail to reject the null hypothesis. The precision difference between low- and high-calorie groups is not statistically significant, so we find no evidence of unfairness in model precision based on calorie level.
 
 Below we show a distrubution of the fairness permutation:
-<iframe src="assets/fairness_permutation_precision.html" width="850" height="600" frameborder="0"></iframe>
+<iframe src="assets/fairness_permutation_precision.html" width="820" height="500" frameborder="0"></iframe>
