@@ -212,7 +212,7 @@ Our final model used a `RandomForestClassifier`, selected for its ability to cap
 
 To optimize our final model, we performed a grid search over several key hyperparameters of the RandomForestClassifier. We tuned n_estimators, which determines the number of trees in the forest, testing values of 100 and 200 to balance performance and training time. We adjusted max_depth to control the complexity of each tree, trying values of 20 and 30 to prevent both overfitting and underfitting. Additionally, we experimented with min_samples_split values of 2 and 5, which set the minimum number of samples needed to split an internal node — higher values can mitigate overfitting. Finally, we tested class_weight settings of None and 'balanced' to address potential class imbalance in the ratings. These hyperparameters were chosen because they directly impact model flexibility, generalization, and fairness across classes.
 
-The best performing model achieved a **macro F1 score of 0.7446**, outperforming the baseline’s 0.6986. This suggests that the new features provided more predictive power and helped the model generalize better. Below is the confusion matrix for our final model’s predictions, showing improved performance especially in the mid-to-high rating range.
+The best performing model achieved a **macro F1 score of 0.7446**, outperforming the baseline’s 0.6986. This suggests the new features may have provided more predictive power and improved generalization, though further validation would be needed to confirm this across broader datasets. Below is the confusion matrix for our final model’s predictions, showing improved performance especially in the mid-to-high rating range.
 
 <figure markdown>
   <img src="assets/final_confusion_matrix.png" width="400" alt="Final Confusion Matrix">
@@ -243,4 +243,3 @@ We ran a permutation test using the **difference in macro precision** (Low – H
 
 
 <iframe src="assets/fairness_permutation_precision.html" width="850" height="600" frameborder="0"></iframe>
-<figcaption align="center">Permutation Test: Precision Difference (Low Calorie - High Calorie)</figcaption>
